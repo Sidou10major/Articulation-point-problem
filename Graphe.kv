@@ -1,0 +1,61 @@
+RootContainer:
+
+<RootContainer>:
+    orientation: "vertical"
+    padding: "15dp"
+    canvas.before:
+        Color:
+            rgba: 220/255,220/255,220/255,1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    GraphCanvas:
+        id: graph
+        size_hint: 1 , None
+        height: root.height * 3/4
+        on_touch_down: self.create_node(args)
+    GridLayout:
+        cols:1
+        raws: 2
+        spacing: dp(10)
+        size_hint: 1 , None
+        height: root.height /4
+        Btn:
+            text: "Trouver les points d'articulation"
+            on_press: root.find_joint_nodes(graph.nodes , graph.graph)
+            canvas.before:
+                Color:
+                    rgba: 130/255, 130/255, 250/255 , 1
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [20]
+        Btn:
+            color: 1,3,0,1
+            text: "Effacer"
+            on_press: root.clear(graph)
+            canvas.before:
+                Color:
+                    rgba: 205/255, 201/255, 4/255 , 1
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [20]
+
+<Btn@Button>:
+    font_name: "fonts/OpenSans-SemiBold.ttf"
+    background_color: (0,0,0,0)
+    background_normal: ""
+    size_hint: .5 , .5
+
+<Node>:
+    background_color: 128,222,240,1
+    background_normal: ""
+    color: 0,0,0,1
+    on_press: self.parent.select_node(self)
+    canvas.before:
+        Color:
+            rgba: 0,0,0,1
+        Line:
+            circle: (self.pos[0] + dp(20),self.pos[1] + dp(20),20)
+            width: 3.
